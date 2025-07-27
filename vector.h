@@ -9,6 +9,8 @@
 #define VECTOR_DEFAULT_SIZE 10
 #endif
 
+#define vector_create(T) vector_create_impl(sizeof(T))
+
 typedef struct vector
 {
     void* data;
@@ -17,7 +19,7 @@ typedef struct vector
     unsigned int capacity;
 } vector;
 
-vector vector_create(unsigned int element_size);
+vector vector_create_impl(unsigned int element_size);
 
 void vector_push_back(vector* vector, void* item);
 

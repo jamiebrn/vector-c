@@ -1,6 +1,6 @@
 #include "vector.h"
 
-vector vector_create(unsigned int element_size)
+vector vector_create_impl(unsigned int element_size)
 {
     vector vector;
     vector.data = malloc(element_size * VECTOR_DEFAULT_SIZE);
