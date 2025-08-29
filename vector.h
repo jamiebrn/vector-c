@@ -4,12 +4,15 @@
 #include <string.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <stdio.h>
 
 #ifndef VECTOR_DEFAULT_SIZE
 #define VECTOR_DEFAULT_SIZE 10
 #endif
 
 #define vector_create(T) vector_create_impl(sizeof(T))
+#define vector_push_back(vec_ptr, item_ptr) vector_push_back_amount(vec_ptr, item_ptr, 1)
+#define vector_get_value(T, vec_ptr, index) *(T*)vector_get(vec_ptr, index)
 
 typedef struct vector
 {
@@ -21,9 +24,18 @@ typedef struct vector
 
 vector vector_create_impl(unsigned int element_size);
 
-void vector_push_back(vector* vector, void* item);
+void vector_push_back_amount(vector* vector, void* item, unsigned int amount);
+
+// New memory will be zeroed
+void vector_resize(vector* vector, unsigned int size);
+
+void vector_reserve(vector* vector, unsigned int capacity);
+
+void vector_change_capacity(vector* vector, unsigned int capacity);
 
 void vector_pop_back(vector* vector);
+
+void vector_erase_index(vector* vector, unsigned int index);
 
 void vector_clear(vector* vector);
 
@@ -52,3 +64,8 @@ void vector_iter_inc(vector_iter* iter);
 void vector_iter_dec(vector_iter* iter);
 
 void* vector_iter_get(vector_iter iter);
+
+// Serialisation
+char* vector_serialise(const vector* vector, unsigned int* data_size);
+
+vector vector_deserialise(const char* data, unsigned int data_size);
